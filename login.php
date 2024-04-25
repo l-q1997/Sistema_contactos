@@ -1,12 +1,10 @@
 <?php
 session_start();
-//verificacion de inicio de session
 if (isset($_SESSION['nombre'])) {
-    header('Location: index.php');//sino redirecionar al index
+    header('Location: index.php');
     exit(); 
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>

@@ -1,16 +1,23 @@
 <?php
-# conexion a base de datos 
+
 include_once ("conexion.php");
 
 session_start();
+// verificar inicio de session
 if (!isset($_SESSION['nombre'])) {
     header('Location: login.php');
     exit(); 
-}
+} else {
 
-$sql = "SELECT * FROM contacto";
-$stmt = $conexion->query($sql);
-$contactos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Obtener el ID del usuario de la
+    $usuario_id = $_SESSION['id_usuario'];
+
+    // Consulta para obtener los contactos del usuario actual
+    $sql = "SELECT * FROM contacto WHERE usuario_id = ?";
+    $stmt = $conexion->prepare($sql);
+    $stmt->execute([$usuario_id]);
+    $contactos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>

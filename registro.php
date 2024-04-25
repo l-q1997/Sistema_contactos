@@ -1,9 +1,8 @@
 <?php
 session_start();
-
 if (isset($_SESSION['nombre'])) {
     header('Location: index.php');
-    exit();
+    exit(); 
 }
 
 include_once 'conexion.php';
@@ -12,6 +11,7 @@ if (isset($_POST['txtusu']) && isset($_POST['txtpass'])) {
     $usuario = $_POST['txtusu'];
     $password = $_POST['txtpass'];
 
+    // Validar usuario si ya existe en la base de datos
     $consulta = $conexion->prepare('SELECT COUNT(*) AS existe FROM usuario WHERE username = ?');
     $consulta->execute([$usuario]);
     $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
@@ -22,6 +22,7 @@ if (isset($_POST['txtusu']) && isset($_POST['txtpass'])) {
         exit(); 
     }
 
+    // Insertar si el usuario es único
     $insertar = $conexion->prepare('INSERT INTO usuario (username, password) VALUES (?, ?)');
     $resultado = $insertar->execute([$usuario, $password]);
 
@@ -48,7 +49,7 @@ if (isset($_POST['txtusu']) && isset($_POST['txtpass'])) {
         <?php
         if (isset($_SESSION['error'])) {
             echo '<p style="color: red;">' . $_SESSION['error'] . '</p>';
-            unset($_SESSION['error']); 
+            unset($_SESSION['error']);
         }
         ?>
         <form method="post" action="registro.php">
