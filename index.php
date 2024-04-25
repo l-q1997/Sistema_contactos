@@ -9,7 +9,7 @@ if (!isset($_SESSION['nombre'])) {
     exit(); 
 } else {
 
-    // Obtener el ID del usuario de la
+    // Obtener el ID del usuario
     $usuario_id = $_SESSION['id_usuario'];
 
     // Consulta para obtener los contactos del usuario actual
