@@ -1,15 +1,12 @@
 <?php
-
 include_once ("conexion.php");
 
 session_start();
-// verificar inicio de session
 if (!isset($_SESSION['nombre'])) {
     header('Location: login.php');
     exit(); 
 } else {
-
-    // Obtener el ID del usuario
+    // Obtener el ID del usuario de la sesiÃ³n
     $usuario_id = $_SESSION['id_usuario'];
 
     // Consulta para obtener los contactos del usuario actual
@@ -19,6 +16,7 @@ if (!isset($_SESSION['nombre'])) {
     $contactos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +28,7 @@ if (!isset($_SESSION['nombre'])) {
 <body>
     <center>
         <h1>Bienvenido: <?php echo $_SESSION['nombre']?></h1>
-        <a href="cerrar.php">Cerrar sesión</a>
+        <a href="cerrar.php">Cerrar sesion</a>
         <h3>Lista de contactos</h3>
         <table>
             <tr>

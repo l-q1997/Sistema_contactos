@@ -9,7 +9,7 @@ if (isset($_SESSION['nombre'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Iniciar sesión</title>
+    <title>Iniciar sesion</title>
     <meta charset="utf-8">
 </head>
 <body>
@@ -30,7 +30,7 @@ if (isset($_SESSION['nombre'])) {
             <input type="submit" value="Iniciar sesión">
         </form>
         <br>
-        <p>¿No tienes una cuenta? <a href="registro.php">Regístrate aquí</a></p>
+        <p>¿No tienes una cuenta? <a href="registro.php">Registrate aquí</a></p>
     </center>
 </body>
 </html>

@@ -11,7 +11,7 @@ if (isset($_POST['txtusu']) && isset($_POST['txtpass'])) {
     $usuario = $_POST['txtusu'];
     $password = $_POST['txtpass'];
 
-    // Validar usuario si ya existe en la base de datos
+    // Validar si el nombre de usuario ya existe en la base de datos
     $consulta = $conexion->prepare('SELECT COUNT(*) AS existe FROM usuario WHERE username = ?');
     $consulta->execute([$usuario]);
     $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
@@ -22,12 +22,18 @@ if (isset($_POST['txtusu']) && isset($_POST['txtpass'])) {
         exit(); 
     }
 
-    // Insertar si el usuario es único
+    // Insertar nuevo usuario en la base de datos si el nombre de usuario es único
     $insertar = $conexion->prepare('INSERT INTO usuario (username, password) VALUES (?, ?)');
     $resultado = $insertar->execute([$usuario, $password]);
 
     if ($resultado) {
+        // Obtener el ID del usuario insertado
+        $id_usuario = $conexion->lastInsertId();
+    
+        // Guardar el ID del usuario en la sesión
+        $_SESSION['id_usuario'] = $id_usuario;
         $_SESSION['nombre'] = $usuario;
+    
         header('Location: index.php');
         exit(); 
     } else {
@@ -35,6 +41,7 @@ if (isset($_POST['txtusu']) && isset($_POST['txtpass'])) {
         header('Location: registro.php');
         exit(); 
     }
+    
 }
 ?>
 

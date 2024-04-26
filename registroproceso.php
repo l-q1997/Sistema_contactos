@@ -6,10 +6,22 @@ include_once 'conexion.php';
 $usuario = $_POST['txtusu'];
 $password = $_POST['txtpass'];
 
+// Insertar nuevo usuario en la base de datos
 $sql = $conexion->prepare('INSERT INTO usuario (username, password) VALUES (?, ?)');
-$sql->execute([$usuario, $password]);
+$resultado = $sql->execute([$usuario, $password]);
 
-$_SESSION['nombre'] = $usuario;
+if ($resultado) {
+    // Obtener el ID del usuario insertado
+    $id_usuario = $conexion->lastInsertId();
 
-header('Location: index.php');
-?>
+    // Guardar el ID del usuario en la sesión
+    $_SESSION['id_usuario'] = $id_usuario;
+    $_SESSION['nombre'] = $usuario;
+
+    header('Location: index.php');
+    exit(); 
+} else {
+    $_SESSION['error'] = 'Error al registrar el usuario. Inténtalo de nuevo.';
+    header('Location: registro.php');
+    exit(); 
+}
